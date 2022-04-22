@@ -1,0 +1,10 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "PoolStorage",
+  "sourceName": "contracts/Aave_Contracts/protocol/pool/PoolStorage.sol",
+  "abi": [],
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220176080c616acc1997525043a2ba61a27917a733945a40a9c651a70295fe5ba5464736f6c634300080a0033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220176080c616acc1997525043a2ba61a27917a733945a40a9c651a70295fe5ba5464736f6c634300080a0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}
