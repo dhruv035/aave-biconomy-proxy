@@ -10,25 +10,35 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract AProxy is Ownable, ERC2771Context{
-  using SafeMath for uint256;
-  using SafeERC20 for IERC20;
-address public AAVE_LENDING_POOL_ADDRESS = 0x3561c45840e2681495ACCa3c50Ef4dAe330c94F8;
-Pool public lendingPool = Pool(AAVE_LENDING_POOL_ADDRESS);
+    using SafeMath for uint256;
+    using SafeERC20 for IERC20;
 
-constructor(address _trustedForwarder) ERC2771Context(_trustedForwarder){}
+    address public AAVE_LENDING_POOL_ADDRESS = 0x3561c45840e2681495ACCa3c50Ef4dAe330c94F8;
+    Pool public lendingPool = Pool(AAVE_LENDING_POOL_ADDRESS);
 
-function _msgSender() internal view override(Context, ERC2771Context) returns (address){
+    constructor(address _trustedForwarder) ERC2771Context(_trustedForwarder){}
 
-        return ERC2771Context._msgSender();
+    function _msgSender() internal view override(Context, ERC2771Context) returns (address){
+
+            return ERC2771Context._msgSender();
+        }
+    function _msgData() internal view override(Context, ERC2771Context) returns (bytes calldata){
+
+            return ERC2771Context._msgData();
+        }
+    function depositToAave(address asset, uint256 amount,uint16 referralCode) external {
+            address[] memory tokens = lendingPool.getReservesList();
+            bool assetListed=false;
+
+            for (uint256 i = 0; i < tokens.length; i++) {
+                if (asset==tokens[i]) {
+                    assetListed=true;
+                }
+            }
+            require(assetListed==true);
+            IERC20 underlying = IERC20(asset);
+            underlying.transferFrom(_msgSender(), address(this), amount);
+            underlying.approve(AAVE_LENDING_POOL_ADDRESS, amount);
+            lendingPool.supply(asset, amount,_msgSender(), referralCode);
+        }
     }
-function _msgData() internal view override(Context, ERC2771Context) returns (bytes calldata){
-
-        return ERC2771Context._msgData();
-    }
-function depositToAave(address asset, uint256 amount,uint16 referralCode) external {
-        IERC20 underlying = IERC20(asset);
-        underlying.transferFrom(_msgSender(), address(this), amount);
-        underlying.approve(AAVE_LENDING_POOL_ADDRESS, amount);
-        lendingPool.supply(asset, amount,_msgSender(), referralCode);
-    }
-}
