@@ -6,7 +6,7 @@ async function main() {
   console.log("Account balance:", (await deployer.getBalance()).toString());
 
   const AProxy = await ethers.getContractFactory("AProxy");
-  const forwarder= "0xFD4973FeB2031D4409fB57afEE5dF2051b171104"
+  const forwarder= "0x9399BB24DBB5C4b782C70c2969F58716Ebbd6a3b"
   const token = await AProxy.deploy(forwarder);
 
   console.log("Token address:", token.address);
