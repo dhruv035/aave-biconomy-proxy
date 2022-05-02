@@ -22,10 +22,15 @@ contract AProxy is Ownable, ERC2771Context{
 
             return ERC2771Context._msgSender();
         }
+
     function _msgData() internal view override(Context, ERC2771Context) returns (bytes calldata){
 
             return ERC2771Context._msgData();
         }
+
+    function setTrustedForwarder(address forwarder) external onlyOwner {
+        _trustedForwarder=forwarder;
+    }
     function depositToAave(address asset, uint256 amount,uint16 referralCode) external {
             
             address[] memory tokenList = lendingPool.getReservesList();
