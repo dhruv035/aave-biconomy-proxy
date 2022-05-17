@@ -46,4 +46,19 @@ contract AProxy is Ownable, ERC2771Context{
             underlying.approve(AAVE_LENDING_POOL_ADDRESS, amount);
             lendingPool.supply(asset, amount,_msgSender(), referralCode);
         }
+    function withdrawFromAave(address asset, uint256 amount) external {
+            
+            address[] memory tokenList = lendingPool.getReservesList();
+            bool flag = false;
+            for(uint16 i = 0; i<tokenList.length-1;i=i+1)
+            {
+                if(tokenList[i]==asset)
+                    flag=true;
+            }
+            require(flag==true);
+            IERC20 underlying = IERC20(asset);
+            underlying.transferFrom(_msgSender(), address(this), amount);
+            underlying.approve(AAVE_LENDING_POOL_ADDRESS, amount);
+            lendingPool.withdraw(asset, amount,_msgSender());
+        }
     }
