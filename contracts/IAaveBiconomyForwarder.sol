@@ -6,12 +6,14 @@ interface IAaveBiconomyForwarder {
     function depositToAave(
         address asset,
         uint256 amount,
+        address onBehalfOf,
         uint16 referralCode
     ) external;
     
     function withdrawFromAave(
         address asset,
-        uint256 amount
+        uint256 amount,
+        address to
     ) external;
 
     function setTrustedForwarder(address forwarder) external;

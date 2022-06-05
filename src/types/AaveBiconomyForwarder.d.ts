@@ -21,19 +21,19 @@ import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface AaveBiconomyForwarderInterface extends ethers.utils.Interface {
   functions: {
-    "depositToAave(address,uint256,uint16)": FunctionFragment;
+    "depositToAave(address,uint256,address,uint16)": FunctionFragment;
     "isTrustedForwarder(address)": FunctionFragment;
     "owner()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "setLendingPoolAddress(address)": FunctionFragment;
     "setTrustedForwarder(address)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
-    "withdrawFromAave(address,uint256)": FunctionFragment;
+    "withdrawFromAave(address,uint256,address)": FunctionFragment;
   };
 
   encodeFunctionData(
     functionFragment: "depositToAave",
-    values: [string, BigNumberish, BigNumberish]
+    values: [string, BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "isTrustedForwarder",
@@ -58,7 +58,7 @@ interface AaveBiconomyForwarderInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawFromAave",
-    values: [string, BigNumberish]
+    values: [string, BigNumberish, string]
   ): string;
 
   decodeFunctionResult(
@@ -149,6 +149,7 @@ export class AaveBiconomyForwarder extends BaseContract {
     depositToAave(
       asset: string,
       amount: BigNumberish,
+      onBehalfOf: string,
       referralCode: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -182,6 +183,7 @@ export class AaveBiconomyForwarder extends BaseContract {
     withdrawFromAave(
       asset: string,
       amount: BigNumberish,
+      to: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
@@ -189,6 +191,7 @@ export class AaveBiconomyForwarder extends BaseContract {
   depositToAave(
     asset: string,
     amount: BigNumberish,
+    onBehalfOf: string,
     referralCode: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -222,6 +225,7 @@ export class AaveBiconomyForwarder extends BaseContract {
   withdrawFromAave(
     asset: string,
     amount: BigNumberish,
+    to: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -229,6 +233,7 @@ export class AaveBiconomyForwarder extends BaseContract {
     depositToAave(
       asset: string,
       amount: BigNumberish,
+      onBehalfOf: string,
       referralCode: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -260,6 +265,7 @@ export class AaveBiconomyForwarder extends BaseContract {
     withdrawFromAave(
       asset: string,
       amount: BigNumberish,
+      to: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -286,6 +292,7 @@ export class AaveBiconomyForwarder extends BaseContract {
     depositToAave(
       asset: string,
       amount: BigNumberish,
+      onBehalfOf: string,
       referralCode: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -319,6 +326,7 @@ export class AaveBiconomyForwarder extends BaseContract {
     withdrawFromAave(
       asset: string,
       amount: BigNumberish,
+      to: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
@@ -327,6 +335,7 @@ export class AaveBiconomyForwarder extends BaseContract {
     depositToAave(
       asset: string,
       amount: BigNumberish,
+      onBehalfOf: string,
       referralCode: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -360,6 +369,7 @@ export class AaveBiconomyForwarder extends BaseContract {
     withdrawFromAave(
       asset: string,
       amount: BigNumberish,
+      to: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };

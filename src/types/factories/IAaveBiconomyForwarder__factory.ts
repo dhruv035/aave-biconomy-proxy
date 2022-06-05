@@ -23,6 +23,11 @@ const _abi = [
         type: "uint256",
       },
       {
+        internalType: "address",
+        name: "onBehalfOf",
+        type: "address",
+      },
+      {
         internalType: "uint16",
         name: "referralCode",
         type: "uint16",
@@ -70,6 +75,11 @@ const _abi = [
         internalType: "uint256",
         name: "amount",
         type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
       },
     ],
     name: "withdrawFromAave",

@@ -21,15 +21,15 @@ import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
 interface IAaveBiconomyForwarderInterface extends ethers.utils.Interface {
   functions: {
-    "depositToAave(address,uint256,address,uint16)": FunctionFragment;
+    "depositToAave(address,uint256,uint16)": FunctionFragment;
     "setLendingPoolAddress(address)": FunctionFragment;
     "setTrustedForwarder(address)": FunctionFragment;
-    "withdrawFromAave(address,uint256,address)": FunctionFragment;
+    "withdrawFromAave(address,uint256)": FunctionFragment;
   };
 
   encodeFunctionData(
     functionFragment: "depositToAave",
-    values: [string, BigNumberish, string, BigNumberish]
+    values: [string, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "setLendingPoolAddress",
@@ -41,7 +41,7 @@ interface IAaveBiconomyForwarderInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawFromAave",
-    values: [string, BigNumberish, string]
+    values: [string, BigNumberish]
   ): string;
 
   decodeFunctionResult(
@@ -111,7 +111,6 @@ export class IAaveBiconomyForwarder extends BaseContract {
     depositToAave(
       asset: string,
       amount: BigNumberish,
-      onBehalfOf: string,
       referralCode: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -129,7 +128,6 @@ export class IAaveBiconomyForwarder extends BaseContract {
     withdrawFromAave(
       asset: string,
       amount: BigNumberish,
-      to: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
@@ -137,7 +135,6 @@ export class IAaveBiconomyForwarder extends BaseContract {
   depositToAave(
     asset: string,
     amount: BigNumberish,
-    onBehalfOf: string,
     referralCode: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -155,7 +152,6 @@ export class IAaveBiconomyForwarder extends BaseContract {
   withdrawFromAave(
     asset: string,
     amount: BigNumberish,
-    to: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -163,7 +159,6 @@ export class IAaveBiconomyForwarder extends BaseContract {
     depositToAave(
       asset: string,
       amount: BigNumberish,
-      onBehalfOf: string,
       referralCode: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
@@ -181,7 +176,6 @@ export class IAaveBiconomyForwarder extends BaseContract {
     withdrawFromAave(
       asset: string,
       amount: BigNumberish,
-      to: string,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -192,7 +186,6 @@ export class IAaveBiconomyForwarder extends BaseContract {
     depositToAave(
       asset: string,
       amount: BigNumberish,
-      onBehalfOf: string,
       referralCode: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -210,7 +203,6 @@ export class IAaveBiconomyForwarder extends BaseContract {
     withdrawFromAave(
       asset: string,
       amount: BigNumberish,
-      to: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
@@ -219,7 +211,6 @@ export class IAaveBiconomyForwarder extends BaseContract {
     depositToAave(
       asset: string,
       amount: BigNumberish,
-      onBehalfOf: string,
       referralCode: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
@@ -237,7 +228,6 @@ export class IAaveBiconomyForwarder extends BaseContract {
     withdrawFromAave(
       asset: string,
       amount: BigNumberish,
-      to: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };
